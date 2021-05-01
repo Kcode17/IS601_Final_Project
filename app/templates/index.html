@@ -1,27 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Team</th>
-        <th scope="col">Position</th>
-        <th scope="col">Height_inches</th>
-        <th scope="col">Weight_lbs</th>
-        <th scope="col">Age</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for player in players %}
-    <tr>
-        <td><a href="view/{{player.id}}">{{ player.Name }}</a></td>
-        <td>{{ player.Team }}</td>
-        <td>{{ player.Position }}</td>
-        <td>{{ player.Height_inches }}</td>
-        <td>{{ player.Weight_lbs }}</td>
-        <td>{{ player.Age }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<form action="/cities/new" method="POST">
+    <div class="row">
+        <div class="col">
+            <label for="Name">Email Address</label>
+            <input id="Name" type="text" class="form-control" placeholder="Player Name" name="Name">
+        </div>
+        <div class="col">
+            <label for="Team">Password</label>
+            <input id="Team" type="text" class="form-control" placeholder="Player Team"
+                   name="Team">
+        </div>
+     </div>
+    <button type="submit" class="btn btn-success">Create Account</button>
+
+</form>
+
 {% endblock %}
+

@@ -113,3 +113,14 @@ INSERT INTO tblBaseball_Players (Name,Team,Position,Height_inches,Weight_lbs,Age
     ('Justin Speier',' "ANA"',' "Relief Pitcher"',76,205,33.31),
     ('Darren Oliver',' "ANA"',' "Relief Pitcher"',74,220,36.4),
     ('Hector Carrasco',' "ANA"',' "Relief Pitcher"',74,220,37.36);
+
+
+use Baseball_Players;
+CREATE TABLE IF NOT EXISTS user_Info (
+    `Email` VARCHAR(100) CHARACTER SET utf8,
+    `Password` VARCHAR(20) CHARACTER SET utf8,
+     PRIMARY KEY (`Email`)
+);
+
+INSERT INTO user_Info (Email,Password) VALUES
+    ('root@root.com','root');

@@ -1,16 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-<form action="/cities/new" method="POST">
+<!--form action="/cities/new" method="POST"-->
+<form action="/result" method="POST">
     <div class="row">
         <div class="col">
-            <label for="Name">Email Address</label>
-            <input id="Name" type="text" class="form-control" placeholder="Player Name" name="Name">
+            <label for="email">Email Address</label>
+            <input id="email" type="email" class="form-control" placeholder="Mail Address" name="Mail Address">
         </div>
-        <div class="col">
-            <label for="Team">Password</label>
-            <input id="Team" type="text" class="form-control" placeholder="Player Team"
-                   name="Team">
-        </div>
+
      </div>
     <button type="submit" class="btn btn-success">Create Account</button>
 

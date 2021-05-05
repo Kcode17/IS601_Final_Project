@@ -28,25 +28,33 @@ app.config['MYSQL_DATABASE_DB'] = 'Baseball_Players'
 
 mysql.init_app(app)
 
-message = Mail(
-    from_email='oguriteja@gmail.com',
-    to_emails='oguriteja@gmail.com',
-    subject='Sending with Twilio SendGrid is Fun',
-    html_content='<strong>and easy to do anywhere, even with Python</strong>')
+@app.route('/')
+def get_email():
+   return render_template('index.html')
 
-message_json=message.get()
-try:
-    #print(json.dumps(message.get(), sort_keys=True, indent=4))
-    sendgrid_client = SendGridAPIClient(api_key='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')
-    response = sendgrid_client.send(message)
-    #response = sendgrid_client.client.mail.send.post(request_body=message_json)
-    #print('SENDGRID_API_KEY')
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
-except Exception as e:
-    print(e)
+@app.route('/result',methods = ['POST', 'GET'])
+def result():
+    result = request.form
+    print(result)
+    message = Mail(
+        from_email='oguriteja@gmail.com',
+        to_emails=request.form['Mail Address'],
+        subject='Sending with Twilio SendGrid is Fun',
+        html_content='<strong>Teja and easy to do anywhere, even with Python</strong>')
 
+
+    try:
+        #print(json.dumps(message.get(), sort_keys=True, indent=4))
+        sendgrid_client = SendGridAPIClient(api_key='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')
+        response = sendgrid_client.send(message)
+        #response = sendgrid_client.client.mail.send.post(request_body=message_json)
+        #print('SENDGRID_API_KEY')
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e)
+    return render_template("result.html",result = result)
 
 
 

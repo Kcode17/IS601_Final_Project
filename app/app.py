@@ -4,6 +4,11 @@ from flask import Flask, request, Response, redirect
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+import sendgrid
+import os
+from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import *
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
@@ -13,7 +18,54 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'Baseball_Players'
+#app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+#app.config['MAIL_PORT'] = 587
+#app.config['MAIL_USE_TLS'] = True
+#app.config['MAIL_USERNAME'] = 'apikey'
+#app.config['SECRET_KEY'] = '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'
+#app.config['MAIL_PASSWORD'] = os.environ.get('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')
+#app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
+
 mysql.init_app(app)
+
+message = Mail(
+    from_email='oguriteja@gmail.com',
+    to_emails='oguriteja@gmail.com',
+    subject='Sending with Twilio SendGrid is Fun',
+    html_content='<strong>and easy to do anywhere, even with Python</strong>')
+
+message_json=message.get()
+try:
+    #print(json.dumps(message.get(), sort_keys=True, indent=4))
+    sendgrid_client = SendGridAPIClient(api_key='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')
+    response = sendgrid_client.send(message)
+    #response = sendgrid_client.client.mail.send.post(request_body=message_json)
+    #print('SENDGRID_API_KEY')
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+except Exception as e:
+    print(e)
+
+
+
+
+
+
+
+#sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+#sg = sendgrid.SendGridAPIClient(apikey='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')
+#from_email = Email("test@example.com")
+#to_email = To("oguriteja@gmail.com")
+#subject = "Sending with SendGrid is Fun"
+#content = Content("text/plain", "and easy to do anywhere, even with Python")
+#mail = Mail(from_email, to_email, subject, content)
+#mail = Mail(from_email, to_email, subject, content)
+#response = sg.client.mail.send.post(request_body=mail.get())
+#response = sg.send(mail)
+#print(response.status_code)
+#print(response.body)
+#print(response.headers)
 
 @app.route('/bplayers/new', methods=['GET'])
 def index():
@@ -114,28 +166,28 @@ def api_edit(player_id) -> str:
     resp = Response(status=200, mimetype='application/json')
     return resp
 
-@app.route('/api/v1/bplayers', methods=['POST'])
-def api_add() -> str:
+#@app.route('/api/v1/bplayers', methods=['POST'])
+#def api_add() -> str:
 
-    content = request.json
+#    content = request.json
 
-    cursor = mysql.get_db().cursor()
-    inputData = (content['Name'], content['Team'], content['Position'],
-                 content['Height_inches'], content['Weight_lbs'], content['Age'])
-    sql_insert_query = """INSERT INTO tblBaseball_Players (Name,Team,Position,Height_inches,Weight_lbs,Age) VALUES (%s,%s, %s,%s, %s,%s) """
-    cursor.execute(sql_insert_query, inputData)
-    mysql.get_db().commit()
-    resp = Response(status=201, mimetype='application/json')
-    return resp
+#    cursor = mysql.get_db().cursor()
+#    inputData = (content['Name'], content['Team'], content['Position'],
+#                 content['Height_inches'], content['Weight_lbs'], content['Age'])
+#    sql_insert_query = """INSERT INTO tblBaseball_Players (Name,Team,Position,Height_inches,Weight_lbs,Age) VALUES (%s,%s, %s,%s, %s,%s) """
+#    cursor.execute(sql_insert_query, inputData)
+#    mysql.get_db().commit()
+#    resp = Response(status=201, mimetype='application/json')
+#    return resp
 
-@app.route('/api/v1/bplayers/<int:player_id>', methods=['DELETE'])
-def api_delete(player_id) -> str:
-    cursor = mysql.get_db().cursor()
-    sql_delete_query = """DELETE FROM tblBaseball_Players WHERE id = %s """
-    cursor.execute(sql_delete_query, player_id)
-    mysql.get_db().commit()
-    resp = Response(status=200, mimetype='application/json')
-    return resp
+#@app.route('/api/v1/bplayers/<int:player_id>', methods=['DELETE'])
+#def api_delete(player_id) -> str:
+#    cursor = mysql.get_db().cursor()
+#    sql_delete_query = """DELETE FROM tblBaseball_Players WHERE id = %s """
+#    cursor.execute(sql_delete_query, player_id)
+#    mysql.get_db().commit()
+#    resp = Response(status=200, mimetype='application/json')
+#    return resp
 
 
 

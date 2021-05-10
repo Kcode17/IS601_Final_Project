@@ -45,7 +45,7 @@ def login_check():
     cursor.execute("""Select * from `user_Info` where `Email` like '{}' and `Password` like '{}'""".format(email,password))
     users=cursor.fetchall()
     if len(users) != 0:
-        return render_template('index_1.html')
+        return home()
     else:
         return render_template('login.html')
 

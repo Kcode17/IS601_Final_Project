@@ -1,4 +1,5 @@
 from typing import List, Dict
+import sys
 import simplejson as json
 from flask import Flask, request, Response, redirect
 from flask import render_template
@@ -29,18 +30,76 @@ app.config['MYSQL_DATABASE_DB'] = 'Baseball_Players'
 mysql.init_app(app)
 
 @app.route('/')
-def get_email():
-   return render_template('index.html')
+def login():
+    return render_template('login.html')
+
+@app.route('/register')
+def sign_up():
+    return render_template('signup.html')
+
+
+
+
+#@app.route('/')
+#def get_email():
+#    return render_template('index.html')
+
+#@app.route('/', methods=['GET','POST'])
+#def login():
+#    error = None
+#    if request.method == 'POST':
+#        mail = request.form['Mail Address']
+#        pw = request.form['Password']
+#        print(mail, file=sys.stderr)
+#        print(pw, file=sys.stderr)
+#        cursor2 = mysql.get_db().cursor()
+        #cursor2.execute('SELECT Password FROM user_Info where Email = %s', mail)
+        #result2 = cursor2.fetchall()
+
+#        cursor2.execute('Select Password from user_Info where Email = %s', (mail, ))
+#        pwcheck = cursor2.fetchone()
+#        print(pwcheck, file=sys.stderr)
+#        if pwcheck[0] == pw:
+#            return render_template('login_go.html')
+#        else:
+#            return render_template('login_fail.html')
+#    else:
+#        return render_template('didnot.html')
+
+        #cursor1 = mysql.get_db().cursor()
+        #cursor1.execute('SELECT Password FROM user_Info where Email = %s', mail)
+        #result1 = cursor1.fetchall()
+        #cursor2 = mysql.get_db().cursor()
+        #cursor2.execute('SELECT Email FROM user_Info where Password = %s', pw)
+        #result2 = cursor2.fetchall()
+        #if mail != result2[0] or pw != result1[0]:
+        #    error = 'Invalid Credentials. Please try again.'
+        #    return render_template('login_fail.html')
+        #else:
+        #    print("valid")
+        #    return render_template('login_go.html')
+
+    #return render_template('didnot.html')
+    #print("out")
+    #return render_template('signup.html', error=error)
+
+
+
+
+
+
+
+
+
 
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
     result = request.form
-    print(result)
     message = Mail(
         from_email='oguriteja@gmail.com',
         to_emails=request.form['Mail Address'],
-        subject='Sending with Twilio SendGrid is Fun',
-        html_content='<strong>Teja and easy to do anywhere, even with Python</strong>')
+        subject='Verification Mail',
+        html_content='<strong>Click on the given link to verify and go back to the website</strong>')
 
 
     try:
@@ -54,7 +113,7 @@ def result():
         print(response.headers)
     except Exception as e:
         print(e)
-    return render_template("result.html",result = result)
+    return render_template("result.html", result=result)
 
 
 

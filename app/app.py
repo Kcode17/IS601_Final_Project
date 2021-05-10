@@ -33,9 +33,23 @@ mysql.init_app(app)
 def login():
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/signup')
 def sign_up():
     return render_template('signup.html')
+
+@app.route('/login_check', methods=['POST'])
+def login_check():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    cursor = mysql.get_db().cursor()
+    cursor.execute("""Select * from `user_Info` where `Email` like '{}' and `Password` like '{}'""".format(email,password))
+    users=cursor.fetchall()
+    if len(users) != 0:
+        return render_template('index_1.html')
+    else:
+        return render_template('login.html')
+
+
 
 
 
@@ -134,17 +148,17 @@ def result():
 #print(response.body)
 #print(response.headers)
 
-@app.route('/bplayers/new', methods=['GET'])
-def index():
-    return render_template('login.html', title='Login')
+#@app.route('/bplayers/new', methods=['GET'])
+#def index():
+#    return render_template('login.html', title='Login')
 
-@app.route('/', methods=['GET'])
-def index_1():
+@app.route('/home', methods=['GET'])
+def home():
     user = {'username': 'Baseball Project'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblBaseball_Players')
     result = cursor.fetchall()
-    return render_template('index.html', title='Home', user=user, players=result)
+    return render_template('index_1.html', title='Home', user=user, players=result)
 
 
 @app.route('/view/<int:player_id>', methods=['GET'])

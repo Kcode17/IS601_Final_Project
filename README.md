@@ -4,7 +4,7 @@ This project has two parts:
 - Statistical Chart Generation
 
 # Logic Flow
-![Logic Flow](screenshots/Flow.PNG)
+![Logic Flow](screenshots/Flow.png)
 
 # Login and Email Verification - Sri Siva Krishna Teja Oguri (so43@njit.edu)
 ## Approach

@@ -21,13 +21,6 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'Baseball_Players'
-#app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
-#app.config['MAIL_PORT'] = 587
-#app.config['MAIL_USE_TLS'] = True
-#app.config['MAIL_USERNAME'] = 'apikey'
-#app.config['SECRET_KEY'] = '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'
-#app.config['MAIL_PASSWORD'] = os.environ.get('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')
-#app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 
 mysql.init_app(app)
 

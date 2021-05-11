@@ -222,6 +222,23 @@ def api_edit(player_id) -> str:
 #    resp = Response(status=200, mimetype='application/json')
 #    return resp
 
+@app.route("/chart")
+def chart():
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT Height_inches,Weight_lbs FROM tblBaseball_Players')
+    result = cursor.fetchall()
+    data = [
+        ("Adam Donachie", 22),
+        ("Paul Bako", 34),
+        ("Ramon Hernandez", 30),
+        ("Kevin Millar", 35),
+    ]
+    for row in result:
+        labels = row[0]
+        values = row[1]
+
+    # return render_template('testingchart.html', title='chart', players=result)
+    return render_template("chart.html", labels=labels, values=values, players=result)
 
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ This project has two parts:
     - Take Email and Password from the Login form
     - Check if those particular Email and password exist in the database
     - If exists - navigate to Home Page
-    - If does not exist - navigate to Login Page
+    - If does not exist - navigate back to Login Page
     
 - Implemented Basic Register Feature
     - Take Name,Email,Password from Register Form

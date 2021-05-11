@@ -79,8 +79,6 @@ def signup_process():
         html_content="<strong>Here is your OTP for email verification :" + str(session['otp']) + "</strong>")
     sendgrid_client = SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
     response = sendgrid_client.send(message)
-    # response = sendgrid_client.client.mail.send.post(request_body=message_json)
-    # print('SENDGRID_API_KEY')
     print(response.status_code)
     print(response.body)
     print(response.headers)
@@ -110,103 +108,6 @@ def check_otp():
 def logout():
     session.pop('userid')
     return redirect('/')
-#@app.route('/')
-#def get_email():
-#    return render_template('index.html')
-
-#@app.route('/', methods=['GET','POST'])
-#def login():
-#    error = None
-#    if request.method == 'POST':
-#        mail = request.form['Mail Address']
-#        pw = request.form['Password']
-#        print(mail, file=sys.stderr)
-#        print(pw, file=sys.stderr)
-#        cursor2 = mysql.get_db().cursor()
-        #cursor2.execute('SELECT Password FROM user_Info where Email = %s', mail)
-        #result2 = cursor2.fetchall()
-
-#        cursor2.execute('Select Password from user_Info where Email = %s', (mail, ))
-#        pwcheck = cursor2.fetchone()
-#        print(pwcheck, file=sys.stderr)
-#        if pwcheck[0] == pw:
-#            return render_template('login_go.html')
-#        else:
-#            return render_template('login_fail.html')
-#    else:
-#        return render_template('didnot.html')
-
-        #cursor1 = mysql.get_db().cursor()
-        #cursor1.execute('SELECT Password FROM user_Info where Email = %s', mail)
-        #result1 = cursor1.fetchall()
-        #cursor2 = mysql.get_db().cursor()
-        #cursor2.execute('SELECT Email FROM user_Info where Password = %s', pw)
-        #result2 = cursor2.fetchall()
-        #if mail != result2[0] or pw != result1[0]:
-        #    error = 'Invalid Credentials. Please try again.'
-        #    return render_template('login_fail.html')
-        #else:
-        #    print("valid")
-        #    return render_template('login_go.html')
-
-    #return render_template('didnot.html')
-    #print("out")
-    #return render_template('signup.html', error=error)
-
-
-
-
-
-
-
-
-
-
-@app.route('/result',methods = ['POST', 'GET'])
-def result():
-    result = request.form
-    message = Mail(
-        from_email='oguriteja@gmail.com',
-        to_emails=request.form['Mail Address'],
-        subject='Verification Mail',
-        html_content='<strong>Click on the given link to verify and go back to the website</strong>')
-
-
-    try:
-        #print(json.dumps(message.get(), sort_keys=True, indent=4))
-        sendgrid_client = SendGridAPIClient(api_key='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')
-        response = sendgrid_client.send(message)
-        #response = sendgrid_client.client.mail.send.post(request_body=message_json)
-        #print('SENDGRID_API_KEY')
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-    except Exception as e:
-        print(e)
-    return render_template("result.html", result=result)
-
-
-
-
-
-
-#sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-#sg = sendgrid.SendGridAPIClient(apikey='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')
-#from_email = Email("test@example.com")
-#to_email = To("oguriteja@gmail.com")
-#subject = "Sending with SendGrid is Fun"
-#content = Content("text/plain", "and easy to do anywhere, even with Python")
-#mail = Mail(from_email, to_email, subject, content)
-#mail = Mail(from_email, to_email, subject, content)
-#response = sg.client.mail.send.post(request_body=mail.get())
-#response = sg.send(mail)
-#print(response.status_code)
-#print(response.body)
-#print(response.headers)
-
-#@app.route('/bplayers/new', methods=['GET'])
-#def index():
-#    return render_template('login.html', title='Login')
 
 @app.route('/home', methods=['GET'])
 def home():

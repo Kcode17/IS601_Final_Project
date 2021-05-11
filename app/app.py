@@ -66,7 +66,7 @@ def signup_process():
     session['password'] = request.form.get('new_password')
     session['otp'] = gen_otp()
     message = Mail(
-        from_email='oguriteja@gmail.com',
+        from_email='krishnaoguri17@gmail.com',
         to_emails=request.form['new_email'],
         subject='Verification Mail',
         html_content="<strong>Here is your OTP for email verification :" + str(session['otp']) + "</strong>")

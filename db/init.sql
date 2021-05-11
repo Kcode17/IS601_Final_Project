@@ -117,10 +117,12 @@ INSERT INTO tblBaseball_Players (Name,Team,Position,Height_inches,Weight_lbs,Age
 
 use Baseball_Players;
 CREATE TABLE IF NOT EXISTS user_Info (
-    `Email` VARCHAR(100) CHARACTER SET utf8,
+    `id` int AUTO_INCREMENT,
+    `Name` VARCHAR (50) CHARACTER SET utf8,
+    `Email` VARCHAR(100) CHARACTER SET utf8 unique,
     `Password` VARCHAR(20) CHARACTER SET utf8,
-     PRIMARY KEY (`Email`)
+     PRIMARY KEY (`id`)
 );
 
-INSERT INTO user_Info (Email,Password) VALUES
-    ('root@root.com','root');
+INSERT INTO user_Info (Name,Email,Password) VALUES
+    ('rootuser','root@root.com','root');

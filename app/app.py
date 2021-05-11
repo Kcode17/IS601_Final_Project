@@ -45,12 +45,20 @@ def login_check():
     cursor.execute("""Select * from `user_Info` where `Email` like '{}' and `Password` like '{}'""".format(email,password))
     users=cursor.fetchall()
     if len(users) != 0:
-        return home()
+        return redirect('/home')
     else:
-        return render_template('login.html')
+        return redirect('/')
 
-
-
+@app.route('/signup_process', methods=['POST'])
+def signup_process():
+    name = request.form.get('new_name')
+    email = request.form.get('new_email')
+    password = request.form.get('new_password')
+    cursor = mysql.get_db().cursor()
+    cursor.execute("""Insert into `user_Info` (`id`,`Name`,`Email`,`Password`) VALUES (NULL,'{}','{}','{}')"""
+                   .format(name,email,password))
+    mysql.get_db().commit()
+    return "Registration done"
 
 
 

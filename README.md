@@ -30,9 +30,9 @@ This project has two parts:
     - Logic Part 1 - Generate OTP and send as part of the email to a new user's email address
     - Logic Part 2 - New form to enter the OTP, validate if the OTP matches
     - Logic Part 3 - If the OTP Matches -> Insert the New User's Information (Name,Email,Password) into the Database
-    - To achieve the above functionality - explore sessions and how to create session and store information into a session
+    - To achieve the above functionality - explored sessions and how to create session and store information into a session
     
-- Code
+- Code (OTP for Email Verification)
     - Create a random number(OTP)
     ```
     def gen_otp():

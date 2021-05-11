@@ -222,22 +222,40 @@ def api_edit(player_id) -> str:
 #    resp = Response(status=200, mimetype='application/json')
 #    return resp
 
+# @app.route("/chart")
+# def chart():
+#     cursor = mysql.get_db().cursor()
+#     cursor.execute('SELECT Height_inches,Weight_lbs FROM tblBaseball_Players')
+#     result = cursor.fetchall()
+#
+#     data = [
+#         ("Adam Donachie", 22),
+#         ("Paul Bako", 34),
+#         ("Ramon Hernandez", 30),
+#         ("Kevin Millar", 35),
+#     ]
+#
+#         labels = [row[0] for row in data]
+#
+#     # return render_template('testingchart.html', title='chart', players=result)
+#     return render_template("chart.html", labels=labels, values=values, players=result)
+
+def makeChart(data):
+
+    pass
+
+
 @app.route("/chart")
 def chart():
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT Height_inches,Weight_lbs FROM tblBaseball_Players')
-    result = cursor.fetchall()
-    data = [
-        ("Adam Donachie", 22),
-        ("Paul Bako", 34),
-        ("Ramon Hernandez", 30),
-        ("Kevin Millar", 35),
-    ]
-    for row in result:
-        labels = row[0]
-        values = row[1]
+    cursor.execute('''SELECT Height_inches,Weight_lbs FROM tblBaseball_Players''')
+    result = cursor.fetchone()
 
-    # return render_template('testingchart.html', title='chart', players=result)
+    data = [result]
+
+    labels = [row[0] for row in result]
+    values = [row[1] for row in result]
+
     return render_template("chart.html", labels=labels, values=values, players=result)
 
 

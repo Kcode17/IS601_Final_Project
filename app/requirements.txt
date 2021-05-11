@@ -1,0 +1,7 @@
+Flask
+flask-mysql
+simplejson
+sendgrid
+python-http-client
+flask-mail
+python-dotenv

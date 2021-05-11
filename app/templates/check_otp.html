@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+</br>
+</br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mt-100" >
+                <div class="card-body">
+                    <form class="form" method="POST" action="/check_otp">
+                        <label>Enter OTP</label></br>
+                        <input type="text" class="form-control" name="otp"></br>
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Verify">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

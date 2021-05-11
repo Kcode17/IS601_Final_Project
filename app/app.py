@@ -1,6 +1,7 @@
 from typing import List, Dict
 import sys
 import simplejson as json
+import random
 from flask import Flask, request, Response, redirect, session
 from flask import render_template
 from flaskext.mysql import MySQL
@@ -52,16 +53,58 @@ def login_check():
     else:
         return redirect('/')
 
+#@app.route('/signup_process', methods=['POST'])
+#def signup_process():
+#    name = request.form.get('new_name')
+#    email = request.form.get('new_email')
+#    password = request.form.get('new_password')
+#    cursor = mysql.get_db().cursor()
+#    cursor.execute("""Insert into `user_Info` (`id`,`Name`,`Email`,`Password`) VALUES (NULL,'{}','{}','{}')"""
+#                   .format(name,email,password))
+#    mysql.get_db().commit()
+#    return "Registration done"
+def gen_otp():
+    return random.randrange(1000,9999)
+
 @app.route('/signup_process', methods=['POST'])
 def signup_process():
-    name = request.form.get('new_name')
-    email = request.form.get('new_email')
-    password = request.form.get('new_password')
-    cursor = mysql.get_db().cursor()
-    cursor.execute("""Insert into `user_Info` (`id`,`Name`,`Email`,`Password`) VALUES (NULL,'{}','{}','{}')"""
-                   .format(name,email,password))
-    mysql.get_db().commit()
-    return "Registration done"
+    session['name'] = request.form.get('new_name')
+    session['email'] = request.form.get('new_email')
+    session['password'] = request.form.get('new_password')
+    session['otp'] = gen_otp()
+    message = Mail(
+        from_email='oguriteja@gmail.com',
+        to_emails=request.form['new_email'],
+        subject='Verification Mail',
+        html_content="<strong>Here is your OTP for email verification :" + str(session['otp']) + "</strong>")
+    sendgrid_client = SendGridAPIClient(api_key='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')
+    response = sendgrid_client.send(message)
+    # response = sendgrid_client.client.mail.send.post(request_body=message_json)
+    # print('SENDGRID_API_KEY')
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+    return render_template('check_otp.html')
+
+@app.route('/check_otp',methods=['POST'])
+def check_otp():
+    user_otp = request.form.get('otp')
+    if str(user_otp) == str(session['otp']):
+        name = session['name']
+        email = session['email']
+        password = session['password']
+        cursor = mysql.get_db().cursor()
+        cursor.execute("""Insert into `user_Info` (`id`,`Name`,`Email`,`Password`) VALUES (NULL,'{}','{}','{}')"""
+                           .format(name,email,password))
+        mysql.get_db().commit()
+        return redirect('/')
+    else:
+        return "Verification Failed"
+
+
+
+
+
 
 @app.route('/logout')
 def logout():

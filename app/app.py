@@ -77,7 +77,7 @@ def signup_process():
         to_emails=request.form['new_email'],
         subject='Verification Mail',
         html_content="<strong>Here is your OTP for email verification :" + str(session['otp']) + "</strong>")
-    sendgrid_client = SendGridAPIClient(api_key='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')
+    sendgrid_client = SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
     response = sendgrid_client.send(message)
     # response = sendgrid_client.client.mail.send.post(request_body=message_json)
     # print('SENDGRID_API_KEY')

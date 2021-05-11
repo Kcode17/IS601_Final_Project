@@ -14,7 +14,7 @@ from sendgrid.helpers.mail import *
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
-app.secret_key=os.urandom(24)
+app.secret_key = os.urandom(24)
 
 app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -24,30 +24,35 @@ app.config['MYSQL_DATABASE_DB'] = 'Baseball_Players'
 
 mysql.init_app(app)
 
+
 @app.route('/')
 def login():
     return render_template('login.html')
 
+
 @app.route('/signup')
 def sign_up():
     return render_template('signup.html')
+
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
     email = request.form.get('email')
     password = request.form.get('password')
     cursor = mysql.get_db().cursor()
-    cursor.execute("""Select * from `user_Info` where `Email` like '{}' and `Password` like '{}'""".format(email,password))
-    users=cursor.fetchall()
-    #print(isinstance(users,list),flush=True)
+    cursor.execute(
+        """Select * from `user_Info` where `Email` like '{}' and `Password` like '{}'""".format(email, password))
+    users = cursor.fetchall()
+    # print(isinstance(users,list),flush=True)
     if len(users) > 0:
         session['userid'] = users[0]
         return redirect('/home')
     else:
         return redirect('/')
 
-#@app.route('/signup_process', methods=['POST'])
-#def signup_process():
+
+# @app.route('/signup_process', methods=['POST'])
+# def signup_process():
 #    name = request.form.get('new_name')
 #    email = request.form.get('new_email')
 #    password = request.form.get('new_password')
@@ -57,7 +62,8 @@ def login_check():
 #    mysql.get_db().commit()
 #    return "Registration done"
 def gen_otp():
-    return random.randrange(1000,9999)
+    return random.randrange(1000, 9999)
+
 
 @app.route('/signup_process', methods=['POST'])
 def signup_process():
@@ -77,7 +83,8 @@ def signup_process():
     print(response.headers)
     return render_template('check_otp.html')
 
-@app.route('/check_otp',methods=['POST'])
+
+@app.route('/check_otp', methods=['POST'])
 def check_otp():
     user_otp = request.form.get('otp')
     if str(user_otp) == str(session['otp']):
@@ -86,21 +93,18 @@ def check_otp():
         password = session['password']
         cursor = mysql.get_db().cursor()
         cursor.execute("""Insert into `user_Info` (`id`,`Name`,`Email`,`Password`) VALUES (NULL,'{}','{}','{}')"""
-                           .format(name,email,password))
+                       .format(name, email, password))
         mysql.get_db().commit()
         return redirect('/')
     else:
         return "Verification Failed"
 
 
-
-
-
-
 @app.route('/logout')
 def logout():
     session.pop('userid')
     return redirect('/')
+
 
 @app.route('/home', methods=['GET'])
 def home():
@@ -112,6 +116,7 @@ def home():
         return render_template('index_1.html', title='Home', user=user, players=result)
     else:
         return redirect('/')
+
 
 @app.route('/view/<int:player_id>', methods=['GET'])
 def record_view(player_id):
@@ -141,6 +146,7 @@ def form_update_post(player_id):
     mysql.get_db().commit()
     return redirect("/", code=302)
 
+
 @app.route('/bplayers/new', methods=['GET'])
 def form_insert_get():
     return render_template('new.html', title='New Player Form')
@@ -156,6 +162,7 @@ def form_insert_post():
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
+
 
 @app.route('/delete/<int:player_id>', methods=['POST'])
 def form_delete_post(player_id):
@@ -185,13 +192,14 @@ def api_retrieve(player_id) -> str:
     resp = Response(json_result, status=200, mimetype='application/json')
     return resp
 
+
 @app.route('/api/v1/bplayers/<int:player_id>', methods=['PUT'])
 def api_edit(player_id) -> str:
     cursor = mysql.get_db().cursor()
     content = request.json
     inputData = (content['Name'], content['Team'], content['Position'],
                  content['Height_inches'], content['Weight_lbs'],
-                 content['Age'],player_id)
+                 content['Age'], player_id)
     sql_update_query = """UPDATE tblBaseball_Players t SET t.Name = %s, t.Team = %s, t.Position = %s, t.Height_inches = 
         %s, t.Weight_lbs = %s, t.Age = %s WHERE t.id = %s """
     cursor.execute(sql_update_query, inputData)
@@ -199,8 +207,9 @@ def api_edit(player_id) -> str:
     resp = Response(status=200, mimetype='application/json')
     return resp
 
-#@app.route('/api/v1/bplayers', methods=['POST'])
-#def api_add() -> str:
+
+# @app.route('/api/v1/bplayers', methods=['POST'])
+# def api_add() -> str:
 
 #    content = request.json
 
@@ -213,8 +222,8 @@ def api_edit(player_id) -> str:
 #    resp = Response(status=201, mimetype='application/json')
 #    return resp
 
-#@app.route('/api/v1/bplayers/<int:player_id>', methods=['DELETE'])
-#def api_delete(player_id) -> str:
+# @app.route('/api/v1/bplayers/<int:player_id>', methods=['DELETE'])
+# def api_delete(player_id) -> str:
 #    cursor = mysql.get_db().cursor()
 #    sql_delete_query = """DELETE FROM tblBaseball_Players WHERE id = %s """
 #    cursor.execute(sql_delete_query, player_id)
@@ -241,22 +250,30 @@ def api_edit(player_id) -> str:
 #     return render_template("chart.html", labels=labels, values=values, players=result)
 
 def makeChart(data):
-
     pass
 
 
 @app.route("/chart")
 def chart():
     cursor = mysql.get_db().cursor()
-    cursor.execute('''SELECT Height_inches,Weight_lbs FROM tblBaseball_Players''')
-    result = cursor.fetchone()
+    cursor.execute('SELECT * FROM tblBaseball_Players')
+    result = cursor.fetchall()
+    # labels = []
+    # values = set()
+    # for row in result:
+    #     labels.append(row[0])
+    #     values.append(row[1])
 
-    data = [result]
+    # for row in result:
+    #     labels = row[0]
+    #     values = row[1]
 
-    labels = [row[0] for row in result]
-    values = [row[1] for row in result]
+    # data = [result]
+    #
+    # labels = [row[0] for row in result]
+    # values = [row[1] for row in result]
 
-    return render_template("chart.html", labels=labels, values=values, players=result)
+    return render_template("chart.html", players=result)
 
 
 if __name__ == '__main__':

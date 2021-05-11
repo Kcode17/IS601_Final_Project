@@ -10,6 +10,8 @@
         <table><tr>
             <td>{{ player.Height_inches }}</td>
             <td>{{ player.Weight_lbs }}</td>
+{#            <td>{{ labels }}</td>#}
+{#            <td>{{ values }}</td>#}
         </tr>
         </table>
         {% endfor %}
@@ -24,10 +26,10 @@ var myChart = new Chart(ctx, {
             label: 'Height and weights of the players',
             data: {{ values | safe }},
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)'
+                'rgb(255, 99, 132)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
+                'rgb(255,99,132)',
             ],
             borderWidth: 1
         }]

@@ -1,7 +1,7 @@
 from typing import List, Dict
 import sys
 import simplejson as json
-from flask import Flask, request, Response, redirect
+from flask import Flask, request, Response, redirect, session
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
@@ -13,6 +13,7 @@ from sendgrid.helpers.mail import *
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
+app.secret_key=os.urandom(24)
 
 app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -44,7 +45,9 @@ def login_check():
     cursor = mysql.get_db().cursor()
     cursor.execute("""Select * from `user_Info` where `Email` like '{}' and `Password` like '{}'""".format(email,password))
     users=cursor.fetchall()
-    if len(users) != 0:
+    #print(isinstance(users,list),flush=True)
+    if len(users) > 0:
+        session['userid'] = users[0]
         return redirect('/home')
     else:
         return redirect('/')
@@ -60,8 +63,10 @@ def signup_process():
     mysql.get_db().commit()
     return "Registration done"
 
-
-
+@app.route('/logout')
+def logout():
+    session.pop('userid')
+    return redirect('/')
 #@app.route('/')
 #def get_email():
 #    return render_template('index.html')
@@ -162,12 +167,14 @@ def result():
 
 @app.route('/home', methods=['GET'])
 def home():
-    user = {'username': 'Baseball Project'}
-    cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM tblBaseball_Players')
-    result = cursor.fetchall()
-    return render_template('index_1.html', title='Home', user=user, players=result)
-
+    if 'userid' in session:
+        user = {'username': 'Baseball Project'}
+        cursor = mysql.get_db().cursor()
+        cursor.execute('SELECT * FROM tblBaseball_Players')
+        result = cursor.fetchall()
+        return render_template('index_1.html', title='Home', user=user, players=result)
+    else:
+        return redirect('/')
 
 @app.route('/view/<int:player_id>', methods=['GET'])
 def record_view(player_id):

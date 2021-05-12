@@ -102,6 +102,7 @@ This graph depicts the age of the baseball players in a line graph style using C
 ## How to run the app
 - Software requirements: Docker, Pycharm
 - run using a docker-compose configuration
+- For the email verification to function the .env file has to be in the app folder
 
 
 

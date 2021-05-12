@@ -249,17 +249,72 @@ def api_edit(player_id) -> str:
 #     # return render_template('testingchart.html', title='chart', players=result)
 #     return render_template("chart.html", labels=labels, values=values, players=result)
 
-def makeChart(data):
-    pass
+# def makeChart(data):
+#     pass
 
 
 @app.route("/chart")
 def chart():
-    cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM tblBaseball_Players')
-    result = cursor.fetchall()
+    # cursor = mysql.get_db().cursor()
+    # cursor.execute('SELECT Height_inches, Weight_lbs FROM tblBaseball_Players')
+    # result = cursor.fetchall()
+    # new_result = list(result.dict.values())
+    #
+    # # result.dtype
+    # print(new_result)
+    # data = []
+    # final_result = [list(i) for i in result]
+
+    # list_res = []
+    # for row in result:
+    #     list_res.append(str(row[0]))
+
+    # a_view = result.items()
+    # a_list = list(a_view)
+    #
+    # print(a_list)
+    # result_list = [int(v) for k, v in result[0].items()]
+
+    # dict = result
+    # dict = {'Geeks': 10, 'for': 12, 'Geek': 31}
+
+    # Converting into list of tuple
+    # list = [(k, v) for k, v in dict.items()]
+    # list = list(dict.items())
+    # dict = {'Geeks': 10, 'for': 12, 'Geek': 31, 'Geeks': 31, 'for': 12, 'Geek': 10}
+
+    # data = []
+    #
+    # # Iteration
+    # for i in dict:
+    #     k = (i, dict[i])
+    #     data.append(k)
+    #
+    # # Printing list of tuple
+    # print(data)
+
+    # temp = []
+    # dictList = []
+
+    # for key, value in dict.result():
+    #     temp = [key, value]
+    #     dictlist.append(temp)
+    #
+    # naya = list(result.values())
+    # data = naya
+
     # labels = []
-    # values = set()
+    # values = []
+    #
+    # for i in result:
+    #     labels.append(i)
+    #     values.append(i)
+
+    # print("Name of Students = ", Names)
+    # print("Marks of Students = ", Marks)
+
+    # labels = result[0]
+    # values = result[1]
     # for row in result:
     #     labels.append(row[0])
     #     values.append(row[1])
@@ -269,11 +324,53 @@ def chart():
     #     values = row[1]
 
     # data = [result]
-    #
-    # labels = [row[0] for row in result]
-    # values = [row[1] for row in result]
+    # data = dict(result)
+    # for result in result2:
+    #     labels.append(result)
+    #     values.append(result)
+    # data= []
+    data = [
+        ('Adam Donachie', 22.99),
+        ('Paul Bako', 34.69),
+        ('Ramon Hernandez', 30.78),
+        ('Kevin Millar', 35.43),
+        ('Chris Gomez', 35.71),
+        ('Brian Roberts', 29.39),
+        ('Miguel Tejada', 30.77),
+        ('Melvin Mora', 35.07),
+        ('Aubrey Huff', 30.19),
+        ('Adam Stern', 27.05),
+        ('Jeff Fiorentino', 23.88),
+        ('Freddie Bynum', 26.96),
+        ('Nick Markakis', 23.29),
+        ('Brandon Fahey', 26.11),
+        ('Corey Patterson', 27.55),
+        ('Jay Payton', 34.27),
+        ('Jay Gibbons', 30),
+        ('Erik Bedard', 27.99),
+        ('Hayden Penn', 22.38),
+        ('Adam Loewen', 22.89),
+        ('Daniel Cabrera', 25.76),
+        ('Steve Trachsel', 36.33),
+        ('Jaret Wright', 31.17),
+        ('Kris Benson', 32.31),
+        ('Scott Williamson', 31.03),
+        ('John Parrish', 29.26),
+        ('Danys Baez', 29.47),
+        ('Chad Bradford', 32.46),
+        ('Jamie Walker', 35.67),
+        ('Brian Burres', 25.89),
+        ('Kurt Birkins', 26.55),
+    ]
 
-    return render_template("chart.html", players=result)
+    labels = [row[0] for row in data]
+    values = [row[1] for row in data]
+    # for row in data:
+    #     labels.append(row[0])
+    #     values.append(row[0])
+
+    print(data, flush='true')
+    return render_template("chart.html", labels=labels, values=values)
 
 
 if __name__ == '__main__':

@@ -6,16 +6,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
-{% for player in players %}
-        <table><tr>
-            <td>{{ player.Height_inches }}</td>
-            <td>{{ player.Weight_lbs }}</td>
-{#            <td>{{ labels }}</td>#}
-{#            <td>{{ values }}</td>#}
-        </tr>
-        </table>
-        {% endfor %}
-<canvas id="myChart" width="400" height="400"></canvas>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-1">
+  <a class="navbar-brand" href="#">{% if user %}{{ user.username }}'s Homepage{% else %}
+    <title>Welcome to My Homepage</title>
+    {% endif %}</a>
+  <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/api/v1/cities">Players API JSON endpoint <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="btn btn-success pl-2 lr-2 ml-3" href="/cities/new">Add +<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="btn btn-success pl-2 lr-2 ml-3" href="/chart">See height and weight graph<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="btn btn-success pl-2 lr-2 ml-3" href="/logout">Logout<span class="sr-only">(current)</span></a>
+        </li>
+    </ul>
+  </div>
+</nav>
+{#{% for player in players %}#}
+{#        <table>#}
+{#            <tr>#}
+{#            <td>{{ player.Height_inches }}</td>#}
+{#            <td>{{ player.Weight_lbs }}</td>#}
+{#            <td>{{ labels | safe }}</td>#}
+{#            <td>{{ values | safe }}</td>#}
+{#        </tr>#}
+{#        </table>#}
+{#        {% endfor %}#}
+<canvas id="myChart" width="900" height="400"></canvas>
 <script>
 var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
@@ -45,6 +73,8 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
 </script>
 </body>
 </html>
+

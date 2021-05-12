@@ -99,4 +99,10 @@ This graph depicts the age of the baseball players in a line graph style using C
 
 - The chart can be found in the navbar by clicking the Generate Players Age Graph
 
+## How to run the app
+- Software requirements: Docker, Pycharm
+- run using a docker-compose configuration
+
+
+
 

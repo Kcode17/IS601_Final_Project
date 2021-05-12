@@ -1,7 +1,7 @@
 # IS601 Final Project
 This project has two parts:
-- Login and Email Verification using SendGrid
-- Statistical Chart Generation
+- Login and Email Verification using SendGrid - Sri Siva Krishna Teja Oguri (so43@njit.edu)
+- Statistical Chart Generation - Harish
 
 # Logic Flow
 ![Logic Flow](screenshots/Flow.png)

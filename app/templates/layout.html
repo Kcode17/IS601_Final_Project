@@ -22,22 +22,16 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1">
-  <a class="navbar-brand" href="#">{% if user %}{{ user.username }}'s Homepage{% else %}
-    <title>Welcome to My Homepage</title>
-    {% endif %}</a>
+  <a class="navbar-brand" href="/home">
+    <title></title>
+    </a>
   <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/api/v1/cities">Players API JSON endpoint <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="btn btn-success pl-2 lr-2 ml-3" href="/cities/new">Add +<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/home">BaseBall Players Info<span class="sr-only">(current)</span></a>
         </li>
     </ul>
   </div>

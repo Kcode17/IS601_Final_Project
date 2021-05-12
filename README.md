@@ -1,7 +1,7 @@
 # IS601 Final Project
 This project has two parts:
 - Login and Email Verification using SendGrid - Sri Siva Krishna Teja Oguri (so43@njit.edu)
-- Statistical Chart Generation - Harish
+- Statistical Chart Generation - Harish (hn25@njit.edu)
 
 # Logic Flow
 ![Logic Flow](screenshots/Flow.png)
@@ -76,4 +76,27 @@ This project has two parts:
     ```
     - Once registered, user is navigated to login page where user can login using the registered credentials.
 
-# Chart Feature - Harish
+# JavaScript Chart Feature - Harish(hn25@njit.edu)
+# Baseball Player Age graph
+![Graph](screenshots/graph.png)
+This graph depicts the age of the baseball players in a line graph style using Chart.JS API.
+## Approach
+- Explored all the all the javascript chart options given by the professor.
+- Started with Chart.JS which is extensively used with javascript programming for creating static and dynamic charts.
+- Implemented the basic graph using the sample code given in the Chart.JS website
+- Tried all the graph styles available in the Chart.JS library
+
+
+![Bgcolor](screenshots/bgcolor.png)
+  
+- Customized the color to make it more vibrant
+
+![Bgcolor](screenshots/responsive.png)
+
+- Tried to make the graph responsive to fit it in all screen sizes
+
+![Bgcolor](screenshots/button.png)
+
+- The chart can be found in the navbar by clicking the Generate Players Age Graph
+
+

@@ -4,31 +4,27 @@
     <meta charset="UTF-8">
     <title>Sample chart</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1">
-  <a class="navbar-brand" href="#">{% if user %}{{ user.username }}'s Homepage{% else %}
-    <title>Welcome to My Homepage</title>
-    {% endif %}</a>
+  <a class="navbar-brand" href="/home">
+    BaseBall Players Info
+  </a>
   <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  <div class="collapse navbar-collapse navbar-right" id="navbarNavDropdown">
     <ul class="navbar-nav">
         <li class="nav-item active">
             <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/api/v1/cities">Players API JSON endpoint <span class="sr-only">(current)</span></a>
+            <a class="btn btn-success pl-2 lr-2 ml-3 " href="/chart">Generate Players Age Graph<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="btn btn-success pl-2 lr-2 ml-3" href="/cities/new">Add +<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="btn btn-success pl-2 lr-2 ml-3" href="/chart">See height and weight graph<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="btn btn-success pl-2 lr-2 ml-3" href="/logout">Logout<span class="sr-only">(current)</span></a>
+            <a class="btn btn-success pl-2 lr-2 ml-3 " href="/logout">Logout<span class="sr-only">(current)</span></a>
         </li>
     </ul>
   </div>
@@ -43,7 +39,7 @@
 {#        </tr>#}
 {#        </table>#}
 {#        {% endfor %}#}
-<canvas id="myChart" width="900" height="400"></canvas>
+<canvas id="myChart" ></canvas>
 <script>
 var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
@@ -51,19 +47,19 @@ var myChart = new Chart(ctx, {
     data: {
         labels: {{ labels | safe }},
         datasets: [{
-            label: 'Height and weights of the players',
+            label: 'Players Age',
             data: {{ values | safe }},
             backgroundColor: [
                 'rgb(255, 99, 132)'
             ],
             borderColor: [
-                'rgb(255,99,132)',
+                'rgb(0,99,132)',
             ],
             borderWidth: 1
         }]
     },
     options: {
-        responsive: false,
+        responsive: true,
         scales: {
             yAxes: [{
                 ticks: {
